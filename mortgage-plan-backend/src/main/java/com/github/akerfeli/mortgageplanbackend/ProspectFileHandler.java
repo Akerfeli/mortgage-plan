@@ -50,7 +50,8 @@ public class ProspectFileHandler {
     }
 
     private Prospect parseProspect(String line) {
-        String[] values = line.split(",");
+        // Use regex to split the line while ignoring commas within quotes
+        String[] values = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
         // Check if the line has the expected number of values
         if (values.length != 4) {
