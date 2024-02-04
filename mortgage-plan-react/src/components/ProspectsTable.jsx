@@ -8,7 +8,7 @@ const ProspectsTable = () => {
         <th>Total Loan</th>
         <th>Interest</th>
         <th>Years</th>
-        <th>Montly Payment</th>
+        <th>Monthly Payment</th>
       </tr>
     </table>
   );
