@@ -2,6 +2,7 @@ package com.github.akerfeli.mortgageplanbackend.controller;
 import com.github.akerfeli.mortgageplanbackend.dto.ProspectDTO;
 import com.github.akerfeli.mortgageplanbackend.model.Prospect;
 import com.github.akerfeli.mortgageplanbackend.service.ProspectService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class ProspectController {
     }
 
     @PostMapping
-    public ResponseEntity<Prospect> createProspect(@RequestBody Prospect prospect) {
+    public ResponseEntity<Prospect> createProspect(@Valid @RequestBody Prospect prospect) {
         try {
             Prospect createdProspect = prospectService.createProspect(prospect);
             return new ResponseEntity<>(createdProspect, HttpStatus.CREATED);
