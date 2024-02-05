@@ -1,15 +1,13 @@
 package com.github.akerfeli.mortgageplanbackend.model;
 
-
 import jakarta.validation.constraints.*;
-
 
 public class Prospect {
     /* Given that this project restricts the use of the Math library, the decision to use long as the
     representation for monetary values was made to prevent rounding errors that can occur with floats and doubles.
     If there were no such restrictions, BigDecimal from the Math library would have been a suitable choice. */
 
-    @NotBlank(message = "Name must not be blank")
+    @NotEmpty(message = "Name must not be empty")
     @Size(max = 50, message = "Name must be at most 50 characters")
     private String name;
     @Positive(message = "Total loan must be positive")
@@ -39,7 +37,7 @@ public class Prospect {
         return totalLoanCents;
     }
 
-    public void setTotalLoan(long totalLoanCents) {
+    public void setTotalLoanCents(long totalLoanCents) {
         this.totalLoanCents = totalLoanCents;
     }
 
