@@ -2,16 +2,15 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+body {
+  margin: 0;
 }
 
-h2 {
+a {
+  text-decoration: inherit;
+}
+
+h1 {
   font-size: 1.5rem;
 }
 
@@ -19,7 +18,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  position: relative;
+  margin-top: 20px;
 }
 
 button {
@@ -30,12 +29,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #5058ec;
+  background-color: #1d7550;
   cursor: pointer;
   transition: background-color 0.25s;
 }
 button:hover {
-  background-color: #6e75ff;
+  background-color: #37966e;
 }
 
 .new-prospect-button {
@@ -47,14 +46,132 @@ button:hover {
 }
 
 table {
+  border-collapse: collapse;
+  border-radius: 8px 8px 0px 0px;
   width: 100%;
+  margin: 20px 0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /*For rounded corners to appear on table header*/
 }
 
-@media (max-width: 650px) {
+th {
+  text-align: left;
+  background-color: #e7e7e7;
+}
+
+th,
+td {
+  padding: 12px 15px;
+}
+
+tr {
+  border-bottom: thin solid #dddddd;
+}
+
+tr:nth-of-type(even) {
+  background-color: #f8f8f8;
+}
+
+tbody tr:last-of-type {
+  border-bottom: 3px solid #008168;
+}
+
+.modal-backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: #3a3a3a3a;
+  z-index: 2;
+}
+
+.modal-content-wrapper {
+  position: fixed;
+  width: min(600px, 100vw);
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.modal-content {
+  background-color: white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(500px, 100vw);
+  height: 550px;
+}
+
+.close-button {
+  margin-left: auto;
+  color: #888;
+  font-size: 1.5rem;
+}
+
+.new-prospect-form {
+  color: #888;
+  width: min(350px, 100vw);
+}
+
+.new-prospect-form input {
+  width: 100%;
+  margin-bottom: 20px;
+  height: 2rem;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+}
+
+.new-prospect-form label {
+  font-weight: 500;
+  color: #000;
+  margin-left: 3px;
+}
+
+.new-prospect-form h1 {
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.new-prospect-form p {
+  margin: 0;
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: #000;
+}
+
+.new-prospect-form button {
+  margin: 15px 0px 15px 20px;
+}
+
+@media (max-width: 600px) {
   #dashboard-header {
     flex-direction: column;
   }
   .new-prospect-button {
     margin-left: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .modal-content {
+    height: 100vh;
+    height: 100dvh;
+  }
+  .close-button {
+    margin-right: 10px;
   }
 }
