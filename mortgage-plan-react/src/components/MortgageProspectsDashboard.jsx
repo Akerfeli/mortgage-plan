@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import ProspectsTable from "./ProspectsTable";
 import Modal from "./Modal";
 import NewProspectForm from "./NewProspectForm";
@@ -6,9 +6,12 @@ import useModal from "../hooks/useModal";
 
 const MortgageProspectsDashboard = () => {
   const { isShowing, toggleModal } = useModal();
+  const [refreshTable, setRefreshTable] = useState(false);
 
   const onAddProspect = () => {
-    console.log("prospect added");
+    // Trigger a refetch of data for ProspectsTable
+    toggleModal();
+    setRefreshTable((prevRefreshTable) => !prevRefreshTable);
   };
 
   return (
@@ -20,7 +23,7 @@ const MortgageProspectsDashboard = () => {
             + New Prospect
           </button>
         </div>
-        <ProspectsTable />
+        <ProspectsTable key={refreshTable} />
       </div>
 
       {/* Render the modal only if isShowing is true */}
