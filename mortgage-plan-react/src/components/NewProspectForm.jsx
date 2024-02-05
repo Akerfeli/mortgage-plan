@@ -17,6 +17,14 @@ const AddProspectForm = ({ onFormSubmitted }) => {
     setMonthlyPayment(null);
   }, [name, totalLoan, interest, years]);
 
+  const hasMoreThanTwoDecimals = (value) => {
+    if (value.includes(".")) {
+      const [, decimalPart] = value.split(".");
+      return decimalPart.length > 2;
+    }
+    return false;
+  };
+
   const validateForm = () => {
     const errors = {};
 
@@ -35,23 +43,26 @@ const AddProspectForm = ({ onFormSubmitted }) => {
     if (
       !totalLoan.trim() ||
       isNaN(parseFloat(totalLoan)) ||
-      totalLoan.includes(",")
+      totalLoan.includes(",") ||
+      hasMoreThanTwoDecimals(totalLoan)
     ) {
-      errors.totalLoan = "Total Loan must be a valid number";
+      errors.totalLoan =
+        "Total Loan must be a valid number with at most two decimals";
     }
 
     if (
       !interest.trim() ||
       isNaN(parseFloat(interest)) ||
       interest > 100 ||
-      interest.includes(",")
+      interest.includes(",") ||
+      hasMoreThanTwoDecimals(interest)
     ) {
       errors.interest =
-        "Interest Rate must be a valid number an cannot be larger than 100";
+        "Interest Rate must be a valid number an cannot be larger than 100, with at most two decimals";
     }
 
-    if (!years.trim() || isNaN(parseInt(years))) {
-      errors.years = "Years must be a valid number";
+    if (!years.trim() || isNaN(parseInt(years)) || interest.includes(".")) {
+      errors.years = "Years must be a valid integer";
     }
 
     setFormErrors(errors);
@@ -80,6 +91,10 @@ const AddProspectForm = ({ onFormSubmitted }) => {
   };
 
   const handleCalculateClick = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8080/prospects/calculateMonthlyPayment",
