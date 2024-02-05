@@ -13,7 +13,17 @@ const ProspectsTable = () => {
         setError(null);
       })
       .catch((error) => {
-        setError(error);
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          setError(`Request failed with status ${error.response.status}`);
+        } else if (error.request) {
+          // The request was made but no response was received
+          setError("No response received");
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          setError(error.message);
+        }
       });
   }, []);
 
@@ -43,6 +53,10 @@ const ProspectsTable = () => {
 
     return numberString;
   };
+
+  if (error) {
+    return <p>Error when fetching prospects: {error}</p>;
+  }
 
   if (!prospects && !error) {
     return <p>Loading...</p>;
