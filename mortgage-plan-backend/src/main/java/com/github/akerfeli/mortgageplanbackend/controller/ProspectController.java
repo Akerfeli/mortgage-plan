@@ -1,4 +1,5 @@
 package com.github.akerfeli.mortgageplanbackend.controller;
+import com.github.akerfeli.mortgageplanbackend.MortgageCalculator;
 import com.github.akerfeli.mortgageplanbackend.dto.ProspectDTO;
 import com.github.akerfeli.mortgageplanbackend.model.Prospect;
 import com.github.akerfeli.mortgageplanbackend.service.ProspectService;
@@ -56,5 +57,13 @@ public class ProspectController {
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/calculateMonthlyPayment")
+    public ResponseEntity<Integer> calculateMonthlyRate(@RequestBody Prospect prospect) {
+        int monthlyRate = MortgageCalculator.calculateMonthlyPayment(
+                prospect.getTotalLoanCents(), prospect.getInterestRateBps(), prospect.getYears());
+        System.out.println(monthlyRate);
+        return ResponseEntity.ok(monthlyRate);
     }
 }
