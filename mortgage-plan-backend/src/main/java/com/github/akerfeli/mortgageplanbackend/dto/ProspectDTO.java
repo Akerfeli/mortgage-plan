@@ -2,15 +2,15 @@ package com.github.akerfeli.mortgageplanbackend.dto;
 
 public class ProspectDTO {
     private String name;
-    private double totalLoan;
-    private double interest;
+    private long totalLoanCents;
+    private int interestRateBsp;
     private int years;
-    private double monthlyPayment; // calculated value
+    private int monthlyPayment; // calculated value
 
-    public ProspectDTO(String name, double totalLoan, double interest, int years, double monthlyPayment) {
+    public ProspectDTO(String name, long totalLoanCents, int interestRateBsp, int years, int monthlyPayment) {
         this.name = name;
-        this.totalLoan = totalLoan;
-        this.interest = interest;
+        this.totalLoanCents = totalLoanCents;
+        this.interestRateBsp = interestRateBsp;
         this.years = years;
         this.monthlyPayment = monthlyPayment;
     }
@@ -23,20 +23,20 @@ public class ProspectDTO {
         this.name = name;
     }
 
-    public double getTotalLoan() {
-        return totalLoan;
+    public long getTotalLoanCents() {
+        return totalLoanCents;
     }
 
-    public void setTotalLoan(double totalLoan) {
-        this.totalLoan = totalLoan;
+    public void setTotalLoanCents(long totalLoanCents) {
+        this.totalLoanCents = totalLoanCents;
     }
 
-    public double getInterest() {
-        return interest;
+    public int getInterestRateBsp() {
+        return interestRateBsp;
     }
 
-    public void setInterest(double interest) {
-        this.interest = interest;
+    public void setInterestRateBsp(int interestRateBsp) {
+        this.interestRateBsp = interestRateBsp;
     }
 
     public int getYears() {
@@ -47,11 +47,11 @@ public class ProspectDTO {
         this.years = years;
     }
 
-    public double getMonthlyPayment() {
+    public int getMonthlyPayment() {
         return monthlyPayment;
     }
 
-    public void setMonthlyPayment(double monthlyPayment) {
+    public void setMonthlyPayment(int monthlyPayment) {
         this.monthlyPayment = monthlyPayment;
     }
 }

@@ -1,15 +1,19 @@
 package com.github.akerfeli.mortgageplanbackend.model;
 
 public class Prospect {
+    /* Given that this project restricts the use of the Math library, the decision to use long as the
+    representation for monetary values was made to prevent rounding errors that can occur with floats and doubles.
+    If there were no such restrictions, BigDecimal from the Math library would have been a suitable choice. */
+
     private String name;
-    private double totalLoan;
-    private double interest;
+    private long totalLoanCents; // Total loan amount in cents
+    private int interestRateBps; // Interest base point (0.01% -> 1)
     private int years;
 
-    public Prospect(String name, double totalLoan, double interest, int years) {
+    public Prospect(String name, long totalLoanCents, int interestRateBps, int years) {
         this.name = name;
-        this.totalLoan = totalLoan;
-        this.interest = interest;
+        this.totalLoanCents = totalLoanCents;
+        this.interestRateBps = interestRateBps;
         this.years = years;
     }
 
@@ -21,20 +25,20 @@ public class Prospect {
         this.name = name;
     }
 
-    public double getTotalLoan() {
-        return totalLoan;
+    public long getTotalLoanCents() {
+        return totalLoanCents;
     }
 
-    public void setTotalLoan(double totalLoan) {
-        this.totalLoan = totalLoan;
+    public void setTotalLoan(long totalLoanCents) {
+        this.totalLoanCents = totalLoanCents;
     }
 
-    public double getInterest() {
-        return interest;
+    public int getInterestRateBps() {
+        return interestRateBps;
     }
 
-    public void setInterest(double interest) {
-        this.interest = interest;
+    public void setInterestRateBps(int interestRateBps) {
+        this.interestRateBps = interestRateBps;
     }
 
     public int getYears() {

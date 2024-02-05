@@ -34,13 +34,13 @@ public class ProspectController {
     }
 
     private ProspectDTO convertToDTO(Prospect prospect) {
-        double monthlyPayment =
-                calculateMonthlyPayment(prospect.getTotalLoan(), prospect.getInterest(), prospect.getYears());
+        int monthlyPayment =
+                calculateMonthlyPayment(prospect.getTotalLoanCents(), prospect.getInterestRateBps(), prospect.getYears());
 
         return new ProspectDTO(
                 prospect.getName(),
-                prospect.getTotalLoan(),
-                prospect.getInterest(),
+                prospect.getTotalLoanCents(),
+                prospect.getInterestRateBps(),
                 prospect.getYears(),
                 monthlyPayment
         );
