@@ -5,7 +5,7 @@ const MortgageProspectsDashboard = () => {
   return (
     <div className="main">
       <div id="dashboard-header">
-        <h2>Mortgage Prospects</h2>
+        <h1>Mortgage Prospects</h1>
         <button
           className="new-prospect-button"
           onClick={() => console.log("Add new prospect clicked")}

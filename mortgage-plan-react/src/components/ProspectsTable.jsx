@@ -17,6 +17,33 @@ const ProspectsTable = () => {
       });
   }, []);
 
+  // Moves decimal point two steps to the left
+  const moveDecimalPoint = (number) => {
+    // Convert the number to a string
+    let numberString = number.toString();
+
+    // If the number is less than 10, add a leading zero
+    if (number < 10) {
+      numberString = "0" + numberString;
+    }
+
+    // If the number is less than 100, add a leading zero
+    if (number < 100) {
+      numberString = "0" + numberString;
+    }
+
+    // Insert a dot before the second last digit
+    numberString = numberString.slice(0, -2) + "." + numberString.slice(-2);
+
+    // Remove trailing zeros
+    numberString = numberString.replace(/\.?0+$/, "");
+
+    // Remove trailing dot
+    numberString = numberString.replace(/\.$/, "");
+
+    return numberString;
+  };
+
   if (!prospects && !error) {
     return <p>Loading...</p>;
   }
@@ -36,9 +63,10 @@ const ProspectsTable = () => {
         {prospects.map((prospect, index) => (
           <tr key={index}>
             <td>{prospect.name}</td>
-            <td>{prospect.totalLoan}</td>
-            <td>{prospect.interest}</td>
+            <td>{moveDecimalPoint(prospect.totalLoanCents)}</td>
+            <td>{moveDecimalPoint(prospect.interestRateBsp)}%</td>
             <td>{prospect.years}</td>
+            <td>{moveDecimalPoint(prospect.monthlyPayment)}</td>
           </tr>
         ))}
       </tbody>
