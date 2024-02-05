@@ -1,6 +1,9 @@
 package com.github.akerfeli.mortgageplanbackend;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,28 +13,32 @@ import org.springframework.core.io.ClassPathResource;
 /**
  * Utility class to read comma-separated prospect data from a file and create Prospect objects.
  * The file format should be "name,loanAmount,interestRate,loanTerm" per line.
- * The decimal values can have max 2 decimals.
+ * The decimal values may have max 2 decimals.
  * Invalid lines, empty values, or parsing errors are skipped, ensuring a list of valid prospects.
  */
 public class ProspectFileHandler {
 
     private final String filePath;
 
-    // Default constructor uses the original file path
-    public ProspectFileHandler() {
-        this.filePath = "data/prospects.txt";
-    }
-
-    // Constructor with a custom file path, used in tests
     public ProspectFileHandler(String filePath) {
         this.filePath = filePath;
+    }
+
+    public void writeProspectToFile(Prospect prospect) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            String totalLoanString = moveDecimalPoint(prospect.getTotalLoanCents());  // Convert totalLoanCents to decimal
+            String interestString = moveDecimalPoint(prospect.getInterestRateBps());  // Convert interestRateBps to percentage
+
+            // Appending the data for a prospect to the file
+            writer.newLine();
+            writer.write(String.format("%s,%s,%s,%d", prospect.getName(), totalLoanString, interestString, prospect.getYears()));
+        }
     }
 
     public List<Prospect> getAllProspects() {
         List<Prospect> prospects = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                new ClassPathResource(filePath).getInputStream()))) {
+        try (BufferedReader br = createBufferedReader(filePath)) {
 
             // Skip the header line
             br.readLine();
@@ -48,6 +55,22 @@ public class ProspectFileHandler {
         }
 
         return prospects;
+    }
+
+    private BufferedReader createBufferedReader(String filePath) throws IOException {
+        if (filePath.startsWith("classpath:")) {
+            // Load from classpath resource
+            String resourcePath = filePath.substring("classpath:".length());
+            ClassPathResource classPathResource = new ClassPathResource(resourcePath);
+
+            InputStream inputStream = classPathResource.getInputStream();
+            return new BufferedReader(new InputStreamReader(inputStream));
+
+        } else {
+            // Load from absolute file path
+            Path path = Paths.get(filePath);
+            return Files.newBufferedReader(path);
+        }
     }
 
     private Prospect parseProspect(String line) {
@@ -86,7 +109,7 @@ public class ProspectFileHandler {
         }
     }
 
-    public int parseDecimalStringToInteger(String string) {
+    private int parseDecimalStringToInteger(String string) {
 
         // If there are more than two symbols after the decimal point, throw an error
         if (string.contains(".") && string.split("\\.")[1].length() > 2) {
@@ -102,7 +125,7 @@ public class ProspectFileHandler {
         return Integer.parseInt(valueScaledBy100);
     }
 
-    public long parseDecimalStringToLong(String string) {
+    private long parseDecimalStringToLong(String string) {
 
         // If there are more than two symbols after the decimal point, throw an error
         if (string.contains(".") && string.split("\\.")[1].length() > 2) {
@@ -135,6 +158,32 @@ public class ProspectFileHandler {
             return value + "0";
         }
         return value;
+    }
+
+    private String moveDecimalPoint(long number) {
+        // Convert the number to a string
+        String numberString = Long.toString(number);
+
+        // If the number is less than 10, add a leading zero
+        if (number < 10) {
+            numberString = "0" + numberString;
+        }
+
+        // If the number is less than 100, add a leading zero
+        if (number < 100) {
+            numberString = "0" + numberString;
+        }
+
+        // Insert a dot before the second last digit
+        numberString = numberString.substring(0, numberString.length() - 2) + "." + numberString.substring(numberString.length() - 2);
+
+        // Remove trailing zeros
+        numberString = numberString.replaceAll("\\.?0+$", "");
+
+        // Remove trailing dot
+        numberString = numberString.replaceAll("\\.$", "");
+
+        return numberString;
     }
 
 }

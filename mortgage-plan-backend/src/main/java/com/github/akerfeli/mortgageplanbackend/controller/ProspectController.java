@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,5 +45,15 @@ public class ProspectController {
                 prospect.getYears(),
                 monthlyPayment
         );
+    }
+
+    @PostMapping
+    public ResponseEntity<Prospect> createProspect(@RequestBody Prospect prospect) {
+        try {
+            Prospect createdProspect = prospectService.createProspect(prospect);
+            return new ResponseEntity<>(createdProspect, HttpStatus.CREATED);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

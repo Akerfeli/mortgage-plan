@@ -12,7 +12,7 @@ class ProspectFileHandlerTests {
 
     @Test
     void testGetAllProspects() {
-        ProspectFileHandler fileHandler = new ProspectFileHandler("data/prospects_test.txt");
+        ProspectFileHandler fileHandler = new ProspectFileHandler("classpath:data/prospects_test.txt");
         List<Prospect> prospects = fileHandler.getAllProspects();
 
         assertNotNull(prospects);
