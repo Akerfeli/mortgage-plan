@@ -124,7 +124,7 @@ const AddProspectForm = ({ onFormSubmitted }) => {
       />
       <br />
       <TextInput
-        label="Total Loan"
+        label="Total Loan €"
         value={totalLoan}
         onChange={setTotalLoan}
         error={formErrors.totalLoan}
@@ -146,7 +146,7 @@ const AddProspectForm = ({ onFormSubmitted }) => {
       <br />
       {monthlyPayment ? (
         <>
-          <p>Monthly Payment: {moveDecimalLeft(monthlyPayment)}</p>
+          <p>Monthly Payment: {moveDecimalLeft(monthlyPayment)} €</p>
           <div style={{ textAlign: "center" }}>
             <button type="button" onClick={handleSubmit}>
               Add Prospect

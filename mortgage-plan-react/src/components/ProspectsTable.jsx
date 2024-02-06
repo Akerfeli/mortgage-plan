@@ -51,10 +51,10 @@ const ProspectsTable = () => {
         {prospects.map((prospect, index) => (
           <tr key={index}>
             <td>{prospect.name}</td>
-            <td>{moveDecimalLeft(prospect.totalLoanCents)}</td>
+            <td>{moveDecimalLeft(prospect.totalLoanCents)} €</td>
             <td>{moveDecimalLeft(prospect.interestRateBsp)}%</td>
             <td>{prospect.years}</td>
-            <td>{moveDecimalLeft(prospect.monthlyPayment)}</td>
+            <td>{moveDecimalLeft(prospect.monthlyPayment)} €</td>
           </tr>
         ))}
       </tbody>
