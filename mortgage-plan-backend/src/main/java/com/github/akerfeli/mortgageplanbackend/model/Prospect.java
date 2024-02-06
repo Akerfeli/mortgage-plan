@@ -12,7 +12,7 @@ public class Prospect {
     private String name;
     @Positive(message = "Total loan must be positive")
     private long totalLoanCents; // Total loan amount in cents
-    @Min(value = 0, message = "Interest rate must be at least 0")
+    @Positive(message = "Interest rate must be positive")
     @Max(value = 10000, message = "Interest rate can't be over 100%")
     private int interestRateBps; // Interest base point (0.01% -> 1)
     @Positive(message = "Years must be positive")
