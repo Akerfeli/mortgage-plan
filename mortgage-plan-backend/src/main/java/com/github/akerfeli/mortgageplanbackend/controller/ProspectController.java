@@ -63,7 +63,6 @@ public class ProspectController {
     public ResponseEntity<Integer> calculateMonthlyRate(@RequestBody Prospect prospect) {
         int monthlyRate = MortgageCalculator.calculateMonthlyPayment(
                 prospect.getTotalLoanCents(), prospect.getInterestRateBps(), prospect.getYears());
-        System.out.println(monthlyRate);
         return ResponseEntity.ok(monthlyRate);
     }
 }
