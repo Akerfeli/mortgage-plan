@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.akerfeli.mortgageplanbackend.model.Prospect;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
 
 /**
  * Utility class to read comma-separated prospect data from a file and create Prospect objects.
@@ -16,11 +18,12 @@ import org.springframework.core.io.ClassPathResource;
  * The decimal values may have max 2 decimals.
  * Invalid lines, empty values, or parsing errors are skipped, ensuring a list of valid prospects.
  */
+@Service
 public class ProspectFileHandler {
 
     private final String filePath;
 
-    public ProspectFileHandler(String filePath) {
+    public ProspectFileHandler(@Value("${prospect.file.path}") String filePath) {
         this.filePath = filePath;
     }
 
