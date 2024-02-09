@@ -71,9 +71,9 @@ mvn test
    npm run build
    ```
 
-**5. Preview the application with**
+**4. Preview the application with**
    ```
    npm run preview -- --port 3001
    ```
 
-**7. To use the web UI,** open your web browser and go to http://localhost:3001/
+**5. To use the web UI,** open your web browser and go to http://localhost:3001/
